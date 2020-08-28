@@ -47,7 +47,7 @@ public class SevenCard implements Comparable<SevenCard> {
 
   @Override
   public int compareTo(SevenCard o) {
-    return getHandValue() - o.getHandValue();
+    return hand.compareTo(o.hand);
   }
 
   private List<Card> getAllCardsAsList() {

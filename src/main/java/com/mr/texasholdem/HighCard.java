@@ -5,7 +5,7 @@ public class HighCard extends Hand{
   private Card card;
 
   public HighCard(Card card) {
-    super(1);
+    super(1, card.getRank());
     this.card = card;
   }
 

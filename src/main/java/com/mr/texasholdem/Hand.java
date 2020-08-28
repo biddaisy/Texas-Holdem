@@ -5,8 +5,11 @@ import java.util.Objects;
 public class Hand implements Comparable<Hand> {
   private final int value;
 
-  public Hand(int value) {
+  private final Rank rank;
+
+  public Hand(int value, Rank rank) {
     this.value = value;
+    this.rank = rank;
   }
 
   public int getValue() {
@@ -20,16 +23,17 @@ public class Hand implements Comparable<Hand> {
     if (o == null || getClass() != o.getClass())
       return false;
     Hand hand = (Hand) o;
-    return value == hand.value;
+    return value == hand.value && rank == hand.rank;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(value);
+    return Objects.hash(value, rank);
   }
 
   @Override
   public int compareTo(Hand o) {
-    return value - o.value;
+    int res = value - o.value;
+    return res == 0 ? rank.compareTo(o.rank) : res;
   }
 }
