@@ -21,10 +21,25 @@ public class Main {
         sevenCards.add(sevenCard);
       }
       Collections.sort(sevenCards);
-      System.out.print(communityCards.toString());
-      System.out.print(sevenCards.stream().reduce("", (s, sc) -> s.concat(" " + sc.getHoleCardCodes()), String::concat));
-      System.out.println();
+      printResult(communityCards, sevenCards);
     }
+  }
+
+  private static void printResult(CommunityCards communityCards, List<SevenCard> sevenCards) {
+    System.out.print(communityCards + " ");
+    SevenCard prevSevenCard = sevenCards.get(0);
+    System.out.print(prevSevenCard.getHoleCardCodes());
+    for (int a = 1; a < sevenCards.size(); a++){
+      SevenCard sevenCard = sevenCards.get(a);
+      if (prevSevenCard.equals(sevenCard)){
+        System.out.print("=");
+      } else {
+        System.out.print(" ");
+      }
+      System.out.print(sevenCard.getHoleCardCodes());
+      prevSevenCard = sevenCard;
+    }
+    System.out.println();
   }
 
   private static String[] getTokens() {

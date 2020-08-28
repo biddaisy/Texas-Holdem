@@ -16,6 +16,7 @@ public class Hand implements Comparable<Hand> {
     return value;
   }
 
+  public Rank getRank() { return rank;}
   @Override
   public boolean equals(Object o) {
     if (this == o)

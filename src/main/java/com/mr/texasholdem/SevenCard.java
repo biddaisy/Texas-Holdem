@@ -56,19 +56,33 @@ public class SevenCard implements Comparable<SevenCard> {
 
   private void evaluate() {
     List<Card> cards = getAllCardsAsList();
-    boolean found = evaluatePair(new ArrayList<>(cards));
-    if (!found) {
-      evaluateHighCard(cards);
-    }
+    boolean found = evaluateTwoPairs(new ArrayList<>(cards));
+    if (found)
+      return;
+    found = evaluatePair(new ArrayList<>(cards));
+    if (found)
+      return;
+    evaluateHighCard(cards);
   }
 
   private void evaluateHighCard(List<Card> cards) {
     hand = new HighCard(Collections.max(cards, new CardRankComparator()));
   }
 
+  private boolean evaluateTwoPairs(List<Card> cards) {
+    List<Pair> pairs = evaluatePairs(cards, new ArrayList<>());
+    int size = pairs.size();
+    if (size < 2) {
+      return false;
+    }
+    Collections.sort(pairs);
+    hand = new TwoPairs(pairs.get(size - 1), pairs.get(size - 2));
+    return true;
+  }
+
   private boolean evaluatePair(List<Card> cards) {
     List<Pair> pairs = evaluatePairs(cards, new ArrayList<>());
-    Pair pair = !pairs.isEmpty() ? Collections.max(pairs, new PairRankComparator()) : null;
+    Pair pair = !pairs.isEmpty() ? Collections.max(pairs) : null;
     return (hand = pair) != null;
   }
 
@@ -79,12 +93,13 @@ public class SevenCard implements Comparable<SevenCard> {
       Card card2 = cards.get(a);
       if (card1.equalsByRank(card2)) {
         pairs.add(new Pair(card1, card2));
-        cards.remove(card1);
         cards.remove(card2);
-        if (cards.size() > 1) {
-          return evaluatePairs(cards, pairs);
-        }
+        break;
       }
+    }
+    cards.remove(card1);
+    if (cards.size() > 1) {
+      return evaluatePairs(cards, pairs);
     }
     return pairs;
   }
