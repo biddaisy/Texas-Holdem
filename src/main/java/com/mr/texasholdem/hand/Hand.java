@@ -1,10 +1,18 @@
 package com.mr.texasholdem.hand;
 
-import com.mr.texasholdem.card.Rank;
-
 import java.util.Objects;
 
+import com.mr.texasholdem.card.Rank;
+
 public class Hand implements Comparable<Hand> {
+  protected static final int HIGH_CARD_VALUE = 1;
+
+  protected static final int PAIR_VALUE = 2;
+
+  protected static final int TWO_PAIRS_VALUE = 3;
+
+  protected static final int THREE_OF_A_KIND_VALUE = 4;
+
   private final int value;
 
   private final Rank rank;
@@ -18,7 +26,10 @@ public class Hand implements Comparable<Hand> {
     return value;
   }
 
-  public Rank getRank() { return rank;}
+  public Rank getRank() {
+    return rank;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o)

@@ -1,22 +1,22 @@
 package com.mr.texasholdem;
 
-import com.mr.texasholdem.card.Card;
-import com.mr.texasholdem.card.CardRankComparator;
-import com.mr.texasholdem.hand.Hand;
-import com.mr.texasholdem.hand.HighCard;
-import com.mr.texasholdem.hand.Pair;
-import com.mr.texasholdem.hand.TwoPairs;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.mr.texasholdem.card.Card;
+import com.mr.texasholdem.card.CardRankComparator;
+import com.mr.texasholdem.hand.*;
 
 public class Evaluator {
 
   private Hand hand;
 
   public Hand evaluate(List<Card> cards) {
-    boolean found = evaluateTwoPairs(new ArrayList<>(cards));
+    boolean found = evaluateThreeOfAKinds((new ArrayList<>(cards)));
+    if (found)
+      return hand;
+    found = evaluateTwoPairs(new ArrayList<>(cards));
     if (found)
       return hand;
     found = evaluatePair(new ArrayList<>(cards));
@@ -65,4 +65,34 @@ public class Evaluator {
     return pairs;
   }
 
+  private boolean evaluateThreeOfAKinds(List<Card> cards) {
+    List<ThreeOfAKind> threeOfAKinds = evaluateThreeOfAKinds(cards, new ArrayList<>());
+    Pair pair = !threeOfAKinds.isEmpty() ? Collections.max(threeOfAKinds) : null;
+    return (hand = pair) != null;
+  }
+
+  private List<ThreeOfAKind> evaluateThreeOfAKinds(List<Card> cards, List<ThreeOfAKind> threeOfAKinds) {
+    int size = cards.size();
+    Card card1 = cards.get(0);
+    Card card2 = null;
+    for (int a = 1; a < size; a++) {
+      Card card = cards.get(a);
+      if (card1.equalsByRank(card)) {
+        if (card2 == null) {
+          card2 = card;
+        }
+        else {
+          cards.remove(card2);
+          cards.remove(card);
+          threeOfAKinds.add(new ThreeOfAKind(card1, card2, card));
+          break;
+        }
+      }
+    }
+    cards.remove(card1);
+    if (cards.size() > 1) {
+      return evaluateThreeOfAKinds(cards, threeOfAKinds);
+    }
+    return threeOfAKinds;
+  }
 }

@@ -9,7 +9,7 @@ public class TwoPairs extends Hand {
   private final Pair pair2;
 
   public TwoPairs(Pair pair1, Pair pair2) {
-    super(3, getRank(pair1, pair2));
+    super(TWO_PAIRS_VALUE, getRank(pair1, pair2));
     this.pair1 = pair1;
     this.pair2 = pair2;
   }
