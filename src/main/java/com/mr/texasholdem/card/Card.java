@@ -1,4 +1,4 @@
-package com.mr.texasholdem;
+package com.mr.texasholdem.card;
 
 import java.util.Objects;
 
@@ -14,7 +14,7 @@ public class Card {
 
   public Card(String cardCode){
     if (cardCode == null || cardCode.length() != 2){
-      throw new IllegalArgumentException("card code length must be 2");
+      throw new IllegalArgumentException("Card code length must be 2");
     }
     this.rank = Rank.valueOf(cardCode.charAt(0));
     this.suit = Suit.valueOf(cardCode.charAt(1));
@@ -53,7 +53,7 @@ public class Card {
 
   public static Card valueOf(String cardCode) {
     if (cardCode == null || cardCode.length() != 2) {
-      throw new IllegalArgumentException("wrong card code '" + cardCode + "'");
+      throw new IllegalArgumentException("wrong Card code '" + cardCode + "'");
     }
     return new Card(Rank.valueOf(cardCode.charAt(0)), Suit.valueOf(cardCode.charAt(1)));
   }

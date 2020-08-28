@@ -1,4 +1,6 @@
-package com.mr.texasholdem;
+package com.mr.texasholdem.hand;
+
+import com.mr.texasholdem.card.Rank;
 
 import java.util.Objects;
 

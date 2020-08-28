@@ -1,6 +1,8 @@
-package com.mr.texasholdem;
+package com.mr.texasholdem.hand;
 
-public class Pair extends Hand{
+import com.mr.texasholdem.card.Card;
+
+public class Pair extends Hand {
 
   private final Card card1;
 
@@ -9,7 +11,7 @@ public class Pair extends Hand{
   public Pair(Card card1, Card card2) {
     super(2, card1.getRank());
     if (!card1.equalsByRank(card2)){
-      throw new IllegalArgumentException("card ranks must be identical");
+      throw new IllegalArgumentException("Card ranks must be identical");
     }
     this.card1 = card1;
     this.card2 = card2;

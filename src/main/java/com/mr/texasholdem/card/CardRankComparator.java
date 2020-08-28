@@ -1,4 +1,4 @@
-package com.mr.texasholdem;
+package com.mr.texasholdem.card;
 
 import java.util.Comparator;
 

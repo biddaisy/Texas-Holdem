@@ -1,4 +1,4 @@
-package com.mr.texasholdem;
+package com.mr.texasholdem.card;
 
 public enum Rank {
 

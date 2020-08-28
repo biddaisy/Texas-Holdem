@@ -1,5 +1,7 @@
 package com.mr.texasholdem;
 
+import com.mr.texasholdem.card.Card;
+
 import java.util.Arrays;
 
 public class CommunityCards {
@@ -8,7 +10,7 @@ public class CommunityCards {
 
   public CommunityCards(String cardCodes) {
     if (cardCodes == null || cardCodes.length() != 10) {
-      throw new IllegalArgumentException("Wrong community card code string length. It must be 10");
+      throw new IllegalArgumentException("Wrong community Card code string length. It must be 10");
     }
     for (int a = 0; a < 10; a += 2) {
       cards[a / 2] = Card.valueOf(cardCodes.substring(a, a + 2));

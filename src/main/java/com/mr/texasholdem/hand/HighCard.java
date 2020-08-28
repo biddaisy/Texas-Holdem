@@ -1,6 +1,8 @@
-package com.mr.texasholdem;
+package com.mr.texasholdem.hand;
 
-public class HighCard extends Hand{
+import com.mr.texasholdem.card.Card;
+
+public class HighCard extends Hand {
 
   private Card card;
 
