@@ -3,7 +3,7 @@ package com.mr.texasholdem;
 import java.util.Objects;
 
 public class Hand implements Comparable<Hand> {
-  private int value;
+  private final int value;
 
   public Hand(int value) {
     this.value = value;

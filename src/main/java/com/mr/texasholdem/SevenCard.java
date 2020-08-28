@@ -4,18 +4,50 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class TheSeven implements Comparable<TheSeven> {
+public class SevenCard implements Comparable<SevenCard> {
 
-  private final Card[] holeCards;
+  private final Card[] holeCards = new Card[2];
 
   private final CommunityCards communityCards;
 
   private Hand hand;
 
-  public TheSeven(CommunityCards communityCards, Card[] holeCards) {
+  public SevenCard(CommunityCards communityCards, String holeCardCodes) {
+    if (holeCardCodes == null || holeCardCodes.length() != 4) {
+      throw new IllegalArgumentException("Hole card code string length must be 4");
+    }
     this.communityCards = communityCards;
-    this.holeCards = holeCards;
+    holeCards[0] = new Card(holeCardCodes.substring(0, 2));
+    holeCards[1] = new Card(holeCardCodes.substring(2, 4));
     evaluate();
+  }
+
+  public int getHandValue() {
+    return hand == null ? 0 : hand.getValue();
+  }
+
+  public String getHoleCardCodes() {
+    return holeCards[0].toString() + holeCards[1].toString();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    SevenCard sevenCard = (SevenCard) o;
+    return hand.equals(sevenCard.hand);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(hand);
+  }
+
+  @Override
+  public int compareTo(SevenCard o) {
+    return getHandValue() - o.getHandValue();
   }
 
   private List<Card> getAllCardsAsList() {
@@ -57,27 +89,4 @@ public class TheSeven implements Comparable<TheSeven> {
     return pairs;
   }
 
-  public int getHandValue() {
-    return hand == null ? 0 : hand.getValue();
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (o == null || getClass() != o.getClass())
-      return false;
-    TheSeven theSeven = (TheSeven) o;
-    return hand.equals(theSeven.hand);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(hand);
-  }
-
-  @Override
-  public int compareTo(TheSeven o) {
-    return getHandValue() - o.getHandValue();
-  }
 }
