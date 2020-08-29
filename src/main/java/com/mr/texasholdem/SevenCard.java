@@ -1,11 +1,9 @@
 package com.mr.texasholdem;
 
+import java.util.Objects;
+
 import com.mr.texasholdem.card.Card;
 import com.mr.texasholdem.hand.Hand;
-
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SevenCard implements Comparable<SevenCard> {
 
@@ -22,7 +20,7 @@ public class SevenCard implements Comparable<SevenCard> {
     this.communityCards = communityCards;
     holeCards[0] = new Card(holeCardCodes.substring(0, 2));
     holeCards[1] = new Card(holeCardCodes.substring(2, 4));
-    hand = new Evaluator().evaluate(getAllCardsAsList());
+    hand = new Evaluator().evaluate(getAllCards());
   }
 
   public Hand getHand() {
@@ -53,8 +51,10 @@ public class SevenCard implements Comparable<SevenCard> {
     return hand.compareTo(o.hand);
   }
 
-  private List<Card> getAllCardsAsList() {
-    return Stream.concat(Arrays.stream(holeCards), Arrays.stream(communityCards.getCards())).collect(Collectors.toList());
+  private Card[] getAllCards() {
+    Card[] cards = new Card[7];
+    System.arraycopy(communityCards.getCards(), 0, cards, 0, 5);
+    System.arraycopy(holeCards, 0, cards, 5, 2);
+    return cards;
   }
-
 }

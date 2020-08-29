@@ -12,20 +12,20 @@ public class Evaluator {
 
   private Hand hand;
 
-  public Hand evaluate(List<Card> cards) {
-    boolean found = evaluateStraight(getSortedCards(cards));
+  public Hand evaluate(Card[] cards) {
+    boolean found = evaluateStraight(getSortedCards(Arrays.asList(cards)));
     if (found)
       return hand;
-    found = evaluateThreeOfAKinds((new ArrayList<>(cards)));
+    found = evaluateThreeOfAKinds(Arrays.asList(cards));
     if (found)
       return hand;
-    found = evaluateTwoPairs(new ArrayList<>(cards));
+    found = evaluateTwoPairs(Arrays.asList(cards));
     if (found)
       return hand;
-    found = evaluatePair(new ArrayList<>(cards));
+    found = evaluatePair(Arrays.asList(cards));
     if (found)
       return hand;
-    evaluateHighCard(cards);
+    evaluateHighCard(Arrays.asList(cards));
     return hand;
   }
 
