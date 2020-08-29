@@ -1,11 +1,14 @@
 package com.mr.texasholdem;
 
 import static com.mr.texasholdem.card.Card.findAce;
+import static com.mr.texasholdem.hand.Straight.isValidStraight;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.mr.texasholdem.card.Card;
 import com.mr.texasholdem.card.CardRankComparator;
+import com.mr.texasholdem.card.Suit;
 import com.mr.texasholdem.hand.*;
 
 public class Evaluator {
@@ -13,22 +16,29 @@ public class Evaluator {
   private Hand hand;
 
   public Hand evaluate(Card[] cards) {
-    boolean found = evaluateStraight(getSortedCards(Arrays.asList(cards)));
+
+    boolean found = evaluateFlush(cards);
     if (found)
       return hand;
-    found = evaluateThreeOfAKinds(Arrays.asList(cards));
+    found = evaluateStraight(getSortedCards(asList(cards)));
     if (found)
       return hand;
-    found = evaluateTwoPairs(Arrays.asList(cards));
+    found = evaluateThreeOfAKinds(asList(cards));
     if (found)
       return hand;
-    found = evaluatePair(Arrays.asList(cards));
+    found = evaluateTwoPairs(asList(cards));
     if (found)
       return hand;
-    evaluateHighCard(Arrays.asList(cards));
+    found = evaluatePair(asList(cards));
+    if (found)
+      return hand;
+    evaluateHighCard(asList(cards));
     return hand;
   }
 
+  private List<Card> asList(Card[] cards){
+    return Arrays.stream(cards).collect(Collectors.toList());
+  }
   private SortedSet<Card> getSortedCards(List<Card> cards) {
     SortedSet<Card> sortedCards = new TreeSet<>(new CardRankComparator());
     sortedCards.addAll(cards);
@@ -130,20 +140,28 @@ public class Evaluator {
     int shiftSize = cards.length - 4;
     for (int a = 0; a < shiftSize; a++) {
       Card[] fiveCards = Arrays.copyOfRange(cards, a, a + 5);
-      if (verifyStraight(fiveCards)) {
+      if (isValidStraight(fiveCards)) {
         straits.add(new Straight(fiveCards));
       }
     }
     return straits.isEmpty() ? null : Collections.max(straits);
   }
 
-  private boolean verifyStraight(Card[] five) {
-    for (int a = 0; a < 4; a++) {
-      if (!five[a].isFollowedBy(five[a + 1])) {
-        return false;
+  private boolean evaluateFlush(Card[] cards) {
+    Map<Suit, List<Card>> cardsBySuit = new EnumMap<>(Suit.class);
+    cardsBySuit.put(Suit.CLUBS, new ArrayList<>());
+    cardsBySuit.put(Suit.DIAMONDS, new ArrayList<>());
+    cardsBySuit.put(Suit.HEARTS, new ArrayList<>());
+    cardsBySuit.put(Suit.SPADES, new ArrayList<>());
+    for (Card card : cards) {
+      cardsBySuit.get(card.getSuit()).add(card);
+    }
+    for (List<Card> suitedCards : cardsBySuit.values()) {
+      if (suitedCards.size() == 5) {
+        hand = new Flush(suitedCards.toArray(new Card[]{}));
+        return true;
       }
     }
-    return true;
+    return false;
   }
-
 }

@@ -1,7 +1,10 @@
 package com.mr.texasholdem.hand;
 
+import java.util.Arrays;
 import java.util.Objects;
 
+import com.mr.texasholdem.card.Card;
+import com.mr.texasholdem.card.CardRankComparator;
 import com.mr.texasholdem.card.Rank;
 
 public class Hand implements Comparable<Hand> {
@@ -14,6 +17,8 @@ public class Hand implements Comparable<Hand> {
   protected static final int THREE_OF_A_KIND_VALUE = 4;
 
   protected static final int STRAIGHT_VALUE = 5;
+
+  protected static final int FLUSH_VALUE = 6;
 
   private final int value;
 
@@ -52,4 +57,13 @@ public class Hand implements Comparable<Hand> {
     int res = value - o.value;
     return res == 0 ? rank.compareTo(o.rank) : res;
   }
+
+  protected static Card[] sortHandByRank(Card[] cards) {
+    if (cards == null || cards.length != 5) {
+      throw new IllegalArgumentException("Hand must have 5 cards");
+    }
+    Arrays.sort(cards, new CardRankComparator());
+    return cards;
+  }
+
 }

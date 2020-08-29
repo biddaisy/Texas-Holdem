@@ -52,7 +52,11 @@ public class Card {
   }
 
   public boolean equalsByRank(Card card) {
-    return this.getRank().compareTo(card.getRank()) == 0;
+    return this.getRank() == card.getRank();
+  }
+
+  public boolean equalsBySuit(Card card) {
+    return this.getSuit() == card.getSuit();
   }
 
   public Card clone() {

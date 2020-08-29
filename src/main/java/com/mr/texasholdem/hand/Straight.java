@@ -9,7 +9,10 @@ public class Straight extends Hand {
   private final Card[] cards;
 
   public Straight(Card[] cards) {
-    super(STRAIGHT_VALUE, validateCards(cards)[0].getRank());
+    super(STRAIGHT_VALUE, sortHandByRank(cards)[4].getRank());
+    if (!isValidStraight(cards)){
+      throw new IllegalArgumentException("wrong straight : " + Arrays.toString(cards));
+    }
     this.cards = Arrays.copyOf(cards, 5);
   }
 
@@ -21,10 +24,12 @@ public class Straight extends Hand {
     return Card.hasAce(cards);
   }
 
-  private static Card[] validateCards(Card[] cards) {
-    if (cards == null || cards.length != 5) {
-      throw new IllegalArgumentException("Straight must have 5 cards");
+  public static boolean isValidStraight(Card[] five) {
+    for (int a = 0; a < 4; a++) {
+      if (!five[a].isFollowedBy(five[a + 1])) {
+        return false;
+      }
     }
-    return cards;
+    return true;
   }
 }
