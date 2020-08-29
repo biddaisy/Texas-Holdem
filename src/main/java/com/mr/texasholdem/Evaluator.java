@@ -1,8 +1,8 @@
 package com.mr.texasholdem;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import static com.mr.texasholdem.card.Card.findAce;
+
+import java.util.*;
 
 import com.mr.texasholdem.card.Card;
 import com.mr.texasholdem.card.CardRankComparator;
@@ -13,7 +13,10 @@ public class Evaluator {
   private Hand hand;
 
   public Hand evaluate(List<Card> cards) {
-    boolean found = evaluateThreeOfAKinds((new ArrayList<>(cards)));
+    boolean found = evaluateStraight(getSortedCards(cards));
+    if (found)
+      return hand;
+    found = evaluateThreeOfAKinds((new ArrayList<>(cards)));
     if (found)
       return hand;
     found = evaluateTwoPairs(new ArrayList<>(cards));
@@ -24,6 +27,12 @@ public class Evaluator {
       return hand;
     evaluateHighCard(cards);
     return hand;
+  }
+
+  private SortedSet<Card> getSortedCards(List<Card> cards) {
+    SortedSet<Card> sortedCards = new TreeSet<>(new CardRankComparator());
+    sortedCards.addAll(cards);
+    return sortedCards;
   }
 
   private void evaluateHighCard(List<Card> cards) {
@@ -95,4 +104,46 @@ public class Evaluator {
     }
     return threeOfAKinds;
   }
+
+  private boolean evaluateStraight(SortedSet<Card> sortedCards) {
+    if (sortedCards.size() < 5)
+      return false;
+    Card[] cards = sortedCards.toArray(new Card[] {});
+    Card ace = findAce(cards);
+    hand = findStraight(cards);
+    if (hand == null && ace != null) {
+      cards = transfigurate(sortedCards, ace);
+      hand = findStraight(cards);
+    }
+    return hand != null;
+  }
+
+  private Card[] transfigurate(SortedSet<Card> sortedCards, Card ace) {
+    Card one = ace.clone().transfiguration();
+    sortedCards.remove(ace);
+    sortedCards.add(one);
+    return sortedCards.toArray(new Card[] {});
+  }
+
+  private Straight findStraight(Card[] cards) {
+    List<Straight> straits = new ArrayList<>();
+    int shiftSize = cards.length - 4;
+    for (int a = 0; a < shiftSize; a++) {
+      Card[] fiveCards = Arrays.copyOfRange(cards, a, a + 5);
+      if (verifyStraight(fiveCards)) {
+        straits.add(new Straight(fiveCards));
+      }
+    }
+    return straits.isEmpty() ? null : Collections.max(straits);
+  }
+
+  private boolean verifyStraight(Card[] five) {
+    for (int a = 0; a < 4; a++) {
+      if (!five[a].isFollowedBy(five[a + 1])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
 }

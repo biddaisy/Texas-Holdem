@@ -2,6 +2,7 @@ package com.mr.texasholdem.card;
 
 public enum Rank {
 
+  ONE('1'),
   TWO('2'),
   THREE('3'),
   FOUR('4'),
@@ -24,6 +25,8 @@ public enum Rank {
 
   public static Rank valueOf(char rankCode) {
     switch (rankCode) {
+      case '1':
+        return ONE;
       case '2':
         return TWO;
       case '3':
@@ -57,6 +60,6 @@ public enum Rank {
 
   @Override
   public String toString() {
-    return String.valueOf(code);
+    return this == ONE? ACE.toString() : String.valueOf(code);
   }
 }

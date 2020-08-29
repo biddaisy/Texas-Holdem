@@ -1,9 +1,10 @@
 package com.mr.texasholdem.card;
 
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class Card {
-  private final Rank rank;
+  private Rank rank;
 
   private final Suit suit;
 
@@ -12,8 +13,8 @@ public class Card {
     this.suit = suit;
   }
 
-  public Card(String cardCode){
-    if (cardCode == null || cardCode.length() != 2){
+  public Card(String cardCode) {
+    if (cardCode == null || cardCode.length() != 2) {
       throw new IllegalArgumentException("Card code length must be 2");
     }
     this.rank = Rank.valueOf(cardCode.charAt(0));
@@ -24,12 +25,38 @@ public class Card {
     return rank;
   }
 
+  private int getRankValue() {
+    return rank.ordinal();
+  }
+
+  public boolean isFollowedBy(Card card) {
+    return (card.getRankValue() - getRankValue()) == 1;
+  }
+
   public Suit getSuit() {
     return suit;
   }
 
+  public Card transfiguration() {
+    if (rank == Rank.ACE) {
+      rank = Rank.ONE;
+    }
+    else
+      if (rank == Rank.ONE) {
+        rank = Rank.ACE;
+      }
+      else {
+        throw new UnsupportedOperationException();
+      }
+    return this;
+  }
+
   public boolean equalsByRank(Card card) {
     return this.getRank().compareTo(card.getRank()) == 0;
+  }
+
+  public Card clone() {
+    return new Card(rank, suit);
   }
 
   @Override
@@ -47,7 +74,8 @@ public class Card {
     return Objects.hash(rank, suit);
   }
 
-  @Override public String toString() {
+  @Override
+  public String toString() {
     return rank.toString() + suit.toString();
   }
 
@@ -57,4 +85,25 @@ public class Card {
     }
     return new Card(Rank.valueOf(cardCode.charAt(0)), Suit.valueOf(cardCode.charAt(1)));
   }
+
+  public static boolean hasAce(Card[] cards) {
+    return hasCard(cards, Rank.ACE);
+  }
+
+  public static boolean hasOne(Card[] cards) {
+    return hasCard(cards, Rank.ONE);
+  }
+
+  public static boolean hasCard(Card[] cards, Rank rank) {
+    return Stream.of(cards).anyMatch(c -> c.getRank() == rank);
+  }
+
+  public static Card findAce(Card[] cards) {
+    return findCardByRank(cards, Rank.ACE);
+  }
+
+  public static Card findCardByRank(Card[] cards, Rank rank) {
+    return Stream.of(cards).filter(c -> c.getRank() == rank).findFirst().orElseGet(() -> null);
+  }
+
 }

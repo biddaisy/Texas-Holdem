@@ -13,6 +13,8 @@ public class Hand implements Comparable<Hand> {
 
   protected static final int THREE_OF_A_KIND_VALUE = 4;
 
+  protected static final int STRAIGHT_VALUE = 5;
+
   private final int value;
 
   private final Rank rank;
