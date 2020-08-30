@@ -8,17 +8,19 @@ import com.mr.texasholdem.card.CardRankComparator;
 import com.mr.texasholdem.card.Rank;
 
 public class Hand implements Comparable<Hand> {
-  protected static final int HIGH_CARD_VALUE = 1;
+  public static final int HIGH_CARD_VALUE = 1;
 
-  protected static final int PAIR_VALUE = 2;
+  public static final int PAIR_VALUE = 2;
 
-  protected static final int TWO_PAIRS_VALUE = 3;
+  public static final int TWO_PAIRS_VALUE = 3;
 
-  protected static final int THREE_OF_A_KIND_VALUE = 4;
+  public static final int THREE_OF_A_KIND_VALUE = 4;
 
-  protected static final int STRAIGHT_VALUE = 5;
+  public static final int STRAIGHT_VALUE = 5;
 
-  protected static final int FLUSH_VALUE = 6;
+  public static final int FLUSH_VALUE = 6;
+
+  public static final int FULL_HOUSE_VALUE = 7;
 
   private final int value;
 

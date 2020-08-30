@@ -3,6 +3,7 @@ package com.mr.texasholdem;
 import java.util.Objects;
 
 import com.mr.texasholdem.card.Card;
+import com.mr.texasholdem.evaluator.Evaluator;
 import com.mr.texasholdem.hand.Hand;
 
 public class SevenCard implements Comparable<SevenCard> {

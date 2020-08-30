@@ -26,7 +26,6 @@ public class Main {
   }
 
   private static void printResult(CommunityCards communityCards, List<SevenCard> sevenCards) {
-    System.out.print(communityCards + " ");
     SevenCard prevSevenCard = sevenCards.get(0);
     System.out.print(prevSevenCard.getHoleCardCodes());
     for (int a = 1; a < sevenCards.size(); a++){
