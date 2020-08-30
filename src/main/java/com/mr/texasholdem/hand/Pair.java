@@ -9,12 +9,7 @@ public class Pair extends Hand {
   private final Card card2;
 
   public Pair(Card card1, Card card2) {
-    super(PAIR_VALUE, card1.getRank());
-    if (!card1.equalsByRank(card2)){
-      throw new IllegalArgumentException("Card ranks must be identical");
-    }
-    this.card1 = card1;
-    this.card2 = card2;
+    this(PAIR_VALUE, card1, card2);
   }
 
   protected Pair(int handValue, Card card1, Card card2) {

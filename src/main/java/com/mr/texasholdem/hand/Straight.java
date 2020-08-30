@@ -16,12 +16,20 @@ public class Straight extends Hand {
     this.cards = Arrays.copyOf(cards, 5);
   }
 
+  protected Straight(int handValue, Card[] cards) {
+    super(handValue, sortHandByRank(cards)[4].getRank());
+    if (!isValidStraight(cards)){
+      throw new IllegalArgumentException("wrong straight : " + Arrays.toString(cards));
+    }
+    this.cards = Arrays.copyOf(cards, 5);
+  }
+
   public Card[] getCards() {
     return Arrays.copyOf(cards, 5);
   }
 
-  public boolean hasAce(){
-    return Card.hasAce(cards);
+  public boolean isFlush(){
+    return Flush.isValidFlush(cards);
   }
 
   public static boolean isValidStraight(Card[] five) {

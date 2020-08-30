@@ -1,9 +1,7 @@
 package com.mr.texasholdem.evaluator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.SortedSet;
 
 import com.mr.texasholdem.card.Card;
 import com.mr.texasholdem.hand.Hand;
@@ -21,6 +19,7 @@ public class Evaluator {
     handEvaluators.add(new FlushEvaluator());
     handEvaluators.add(new FullHouseEvaluator());
     handEvaluators.add(new FourOfAKindEvaluator());
+    handEvaluators.add(new StraightFlushEvaluator());
   }
 
   public Hand evaluate(Card[] cards) {
