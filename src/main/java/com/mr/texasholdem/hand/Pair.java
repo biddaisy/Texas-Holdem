@@ -17,8 +17,8 @@ public class Pair extends Hand {
     this.card2 = card2;
   }
 
-  protected Pair(int value, Card card1, Card card2) {
-    super(value, card1.getRank());
+  protected Pair(int handValue, Card card1, Card card2) {
+    super(handValue, card1.getRank());
     if (!card1.equalsByRank(card2)){
       throw new IllegalArgumentException("Card ranks must be identical");
     }

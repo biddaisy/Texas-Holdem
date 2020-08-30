@@ -94,10 +94,6 @@ public class Card {
     return hasCard(cards, Rank.ACE);
   }
 
-  public static boolean hasOne(Card[] cards) {
-    return hasCard(cards, Rank.ONE);
-  }
-
   public static boolean hasCard(Card[] cards, Rank rank) {
     return Stream.of(cards).anyMatch(c -> c.getRank() == rank);
   }

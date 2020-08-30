@@ -15,14 +15,14 @@ public class ThreeOfAKindEvaluator extends AbstractHandEvaluator {
     return findThreeOfAKind(asList(cards));
   }
 
-  protected ThreeOfAKind findThreeOfAKind(List<Card> cards) {
-    List<ThreeOfAKind> threeOfAKinds = evaluateThreeOfAKinds(cards, new ArrayList<>());
-    return !threeOfAKinds.isEmpty() ? Collections.max(threeOfAKinds) : null;
-  }
-
   @Override
   public int priority() {
     return Hand.THREE_OF_A_KIND_VALUE;
+  }
+
+  protected ThreeOfAKind findThreeOfAKind(List<Card> cards) {
+    List<ThreeOfAKind> threeOfAKinds = evaluateThreeOfAKinds(cards, new ArrayList<>());
+    return !threeOfAKinds.isEmpty() ? Collections.max(threeOfAKinds) : null;
   }
 
   private List<ThreeOfAKind> evaluateThreeOfAKinds(List<Card> cards, List<ThreeOfAKind> threeOfAKinds) {
@@ -44,7 +44,7 @@ public class ThreeOfAKindEvaluator extends AbstractHandEvaluator {
       }
     }
     cards.remove(card1);
-    if (cards.size() > 1) {
+    if (cards.size() > 2) {
       return evaluateThreeOfAKinds(cards, threeOfAKinds);
     }
     return threeOfAKinds;

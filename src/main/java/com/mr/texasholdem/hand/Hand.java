@@ -22,6 +22,8 @@ public class Hand implements Comparable<Hand> {
 
   public static final int FULL_HOUSE_VALUE = 7;
 
+  public static final int FOUR_OF_A_KIND_VALUE = 8;
+
   private final int value;
 
   private final Rank rank;

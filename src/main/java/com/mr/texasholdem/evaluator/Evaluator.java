@@ -20,6 +20,7 @@ public class Evaluator {
     handEvaluators.add(new StraightEvaluator());
     handEvaluators.add(new FlushEvaluator());
     handEvaluators.add(new FullHouseEvaluator());
+    handEvaluators.add(new FourOfAKindEvaluator());
   }
 
   public Hand evaluate(Card[] cards) {
