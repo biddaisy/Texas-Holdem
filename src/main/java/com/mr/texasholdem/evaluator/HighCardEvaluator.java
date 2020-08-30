@@ -10,6 +10,7 @@ import com.mr.texasholdem.hand.HighCard;
 
 public class HighCardEvaluator extends AbstractHandEvaluator {
 
+  @Override
   public Hand evaluate(Card[] cards) {
     return new HighCard(Collections.max(Arrays.asList(cards), new CardRankComparator()));
   }

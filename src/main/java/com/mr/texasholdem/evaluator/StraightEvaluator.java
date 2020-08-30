@@ -12,6 +12,7 @@ import com.mr.texasholdem.hand.Straight;
 
 public class StraightEvaluator extends AbstractHandEvaluator {
 
+  @Override
   public Hand evaluate(Card[] cards) {
     SortedSet<Card> uniqueSortedCards = getSortedCards(asList(cards));
     if (uniqueSortedCards.size() < 5)

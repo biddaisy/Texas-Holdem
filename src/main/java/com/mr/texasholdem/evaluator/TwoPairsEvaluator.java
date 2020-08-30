@@ -11,6 +11,7 @@ import com.mr.texasholdem.hand.TwoPairs;
 
 public class TwoPairsEvaluator extends AbstractHandEvaluator {
 
+  @Override
   public Hand evaluate(Card[] cards) {
     PairEvaluator pairEvaluator = new PairEvaluator();
     List<Pair> pairs = pairEvaluator.evaluatePairs(asList(cards), new ArrayList<>());

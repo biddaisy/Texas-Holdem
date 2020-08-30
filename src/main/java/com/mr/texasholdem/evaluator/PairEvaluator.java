@@ -10,14 +10,19 @@ import com.mr.texasholdem.hand.Pair;
 
 public class PairEvaluator extends AbstractHandEvaluator {
 
+  @Override
   public Hand evaluate(Card[] cards) {
-    List<Pair> pairs = evaluatePairs(asList(cards), new ArrayList<>());
-    return !pairs.isEmpty() ? Collections.max(pairs) : null;
+    return findPair(asList(cards));
   }
 
   @Override
   public int priority() {
     return Hand.PAIR_VALUE;
+  }
+
+  protected Pair findPair(List<Card> cards) {
+    List<Pair> pairs = evaluatePairs(cards, new ArrayList<>());
+    return !pairs.isEmpty() ? Collections.max(pairs) : null;
   }
 
   protected List<Pair> evaluatePairs(List<Card> cards, List<Pair> pairs) {

@@ -10,8 +10,13 @@ import com.mr.texasholdem.hand.ThreeOfAKind;
 
 public class ThreeOfAKindEvaluator extends AbstractHandEvaluator {
 
+  @Override
   public Hand evaluate(Card[] cards) {
-    List<ThreeOfAKind> threeOfAKinds = evaluateThreeOfAKinds(asList(cards), new ArrayList<>());
+    return findThreeOfAKind(asList(cards));
+  }
+
+  protected ThreeOfAKind findThreeOfAKind(List<Card> cards) {
+    List<ThreeOfAKind> threeOfAKinds = evaluateThreeOfAKinds(cards, new ArrayList<>());
     return !threeOfAKinds.isEmpty() ? Collections.max(threeOfAKinds) : null;
   }
 
