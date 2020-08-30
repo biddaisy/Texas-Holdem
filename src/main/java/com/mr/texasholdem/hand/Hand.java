@@ -26,6 +26,8 @@ public class Hand implements Comparable<Hand> {
 
   public static final int STRAIGHT_FLUSH_VALUE = 9;
 
+  public static final int ROYAL_FLUSH_VALUE = 10;
+
   private final int value;
 
   private final Rank rank;
