@@ -68,7 +68,7 @@ public class Hand implements Comparable<Hand> {
 
   protected static Card[] sortHandByRank(Card[] cards) {
     if (cards == null || cards.length != 5) {
-      throw new IllegalArgumentException("Hand must have 5 cards");
+      throw new IllegalArgumentException("Hand must have 5 cards: " + Arrays.toString(cards));
     }
     Arrays.sort(cards, new CardRankComparator());
     return cards;

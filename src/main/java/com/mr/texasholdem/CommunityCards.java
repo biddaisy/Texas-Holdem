@@ -8,9 +8,9 @@ public class CommunityCards {
 
   private final Card[] cards = new Card[5];
 
-  public CommunityCards(String cardCodes) {
+  public CommunityCards(String cardCodes) throws WrongInputParameterException {
     if (cardCodes == null || cardCodes.length() != 10) {
-      throw new IllegalArgumentException("Wrong community Card code string length. It must be 10");
+      throw new WrongInputParameterException("Wrong community card code string length. It must be 10: " + cardCodes);
     }
     for (int a = 0; a < 10; a += 2) {
       cards[a / 2] = Card.valueOf(cardCodes.substring(a, a + 2));

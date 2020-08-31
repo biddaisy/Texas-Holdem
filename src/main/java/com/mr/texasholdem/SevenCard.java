@@ -14,9 +14,9 @@ public class SevenCard implements Comparable<SevenCard> {
 
   private final Hand hand;
 
-  public SevenCard(CommunityCards communityCards, String holeCardCodes) {
+  public SevenCard(CommunityCards communityCards, String holeCardCodes) throws WrongInputParameterException {
     if (holeCardCodes == null || holeCardCodes.length() != 4) {
-      throw new IllegalArgumentException("Hole Card code string length must be 4");
+      throw new WrongInputParameterException("Hole Card code string length must be 4: '" + holeCardCodes + "'");
     }
     this.communityCards = communityCards;
     holeCards[0] = new Card(holeCardCodes.substring(0, 2));

@@ -1,5 +1,7 @@
 package com.mr.texasholdem.card;
 
+import com.mr.texasholdem.WrongInputParameterException;
+
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -13,9 +15,9 @@ public class Card {
     this.suit = suit;
   }
 
-  public Card(String cardCode) {
+  public Card(String cardCode) throws WrongInputParameterException {
     if (cardCode == null || cardCode.length() != 2) {
-      throw new IllegalArgumentException("Card code length must be 2");
+      throw new WrongInputParameterException("Card code length must be 2: " + cardCode);
     }
     this.rank = Rank.valueOf(cardCode.charAt(0));
     this.suit = Suit.valueOf(cardCode.charAt(1));
@@ -83,19 +85,11 @@ public class Card {
     return rank.toString() + suit.toString();
   }
 
-  public static Card valueOf(String cardCode) {
+  public static Card valueOf(String cardCode) throws WrongInputParameterException {
     if (cardCode == null || cardCode.length() != 2) {
       throw new IllegalArgumentException("wrong Card code '" + cardCode + "'");
     }
     return new Card(Rank.valueOf(cardCode.charAt(0)), Suit.valueOf(cardCode.charAt(1)));
-  }
-
-  public static boolean hasAce(Card[] cards) {
-    return hasCard(cards, Rank.ACE);
-  }
-
-  public static boolean hasCard(Card[] cards, Rank rank) {
-    return Stream.of(cards).anyMatch(c -> c.getRank() == rank);
   }
 
   public static Card findAce(Card[] cards) {

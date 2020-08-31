@@ -1,5 +1,7 @@
 package com.mr.texasholdem.card;
 
+import com.mr.texasholdem.WrongInputParameterException;
+
 public enum Rank {
 
   ONE('1'),
@@ -23,10 +25,8 @@ public enum Rank {
     this.code = code;
   }
 
-  public static Rank valueOf(char rankCode) {
+  public static Rank valueOf(char rankCode) throws WrongInputParameterException {
     switch (rankCode) {
-      case '1':
-        return ONE;
       case '2':
         return TWO;
       case '3':
@@ -54,7 +54,7 @@ public enum Rank {
       case 'A':
         return ACE;
       default:
-        throw new IllegalArgumentException("wrong rank code '" + "'");
+        throw new WrongInputParameterException("wrong rank code '" + rankCode + "'");
     }
   }
 

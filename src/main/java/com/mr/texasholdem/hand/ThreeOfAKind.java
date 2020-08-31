@@ -12,7 +12,7 @@ public class ThreeOfAKind extends Pair {
   protected ThreeOfAKind(int handValue, Card card1, Card card2, Card card3) {
     super(handValue, card1, card2);
     if (!card3.getRank().equals(super.getRank())) {
-      throw new IllegalArgumentException("Card ranks must be identical");
+      throw new IllegalArgumentException("Card ranks must be identical: " + card3 + " but rank is " + super.getRank());
     }
     this.card3 = card3;
   }

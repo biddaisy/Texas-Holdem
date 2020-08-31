@@ -10,29 +10,38 @@ import java.util.List;
 public class Main {
 
   public static void main(String[] args) {
+    System.out.println("Please enter community and then hole cards");
     while (true) {
       String[] tokens = getTokens();
       if (tokens.length == 0)
         return;
-      CommunityCards communityCards = new CommunityCards(tokens[0]);
-      List<SevenCard> sevenCards = new ArrayList<>();
-      for (int a = 1; a < tokens.length; a++) {
-        SevenCard sevenCard = new SevenCard(communityCards, tokens[a]);
-        sevenCards.add(sevenCard);
+      try {
+        CommunityCards communityCards = new CommunityCards(tokens[0]);
+        List<SevenCard> sevenCards = new ArrayList<>();
+        for (int a = 1; a < tokens.length; a++) {
+          SevenCard sevenCard = new SevenCard(communityCards, tokens[a]);
+          sevenCards.add(sevenCard);
+        }
+        Collections.sort(sevenCards);
+        printResult(communityCards, sevenCards);
       }
-      Collections.sort(sevenCards);
-      printResult(communityCards, sevenCards);
+      catch (WrongInputParameterException e) {
+        System.out.println("Wrong input parameters: " + e.getMessage());
+      }
+
     }
+
   }
 
   private static void printResult(CommunityCards communityCards, List<SevenCard> sevenCards) {
     SevenCard prevSevenCard = sevenCards.get(0);
     System.out.print(prevSevenCard.getHoleCardCodes());
-    for (int a = 1; a < sevenCards.size(); a++){
+    for (int a = 1; a < sevenCards.size(); a++) {
       SevenCard sevenCard = sevenCards.get(a);
-      if (prevSevenCard.equals(sevenCard)){
+      if (prevSevenCard.equals(sevenCard)) {
         System.out.print("=");
-      } else {
+      }
+      else {
         System.out.print(" ");
       }
       System.out.print(sevenCard.getHoleCardCodes());
@@ -43,7 +52,6 @@ public class Main {
 
   private static String[] getTokens() {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
     String inputString = null;
     String[] tokens;
     while (true) {
@@ -51,8 +59,8 @@ public class Main {
         inputString = reader.readLine();
       }
       catch (IOException e) {
-        System.out.println("input error: ");
         e.printStackTrace(System.out);
+        continue;
       }
       if (inputString == null) {
         return new String[] {};

@@ -1,5 +1,7 @@
 package com.mr.texasholdem.card;
 
+import com.mr.texasholdem.WrongInputParameterException;
+
 public enum Suit {
   DIAMONDS('d'),
   CLUBS('c'),
@@ -12,7 +14,7 @@ public enum Suit {
     this.code = code;
   }
 
-  public static Suit valueOf(char suitCode) {
+  public static Suit valueOf(char suitCode) throws WrongInputParameterException {
     switch (suitCode) {
       case 'd':
         return DIAMONDS;
@@ -23,7 +25,7 @@ public enum Suit {
       case 's':
         return SPADES;
       default:
-        throw new IllegalArgumentException("wrong suit code '" + suitCode + "'");
+        throw new WrongInputParameterException("wrong suit code '" + suitCode + "'");
     }
   }
 
