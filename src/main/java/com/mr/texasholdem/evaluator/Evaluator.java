@@ -1,14 +1,14 @@
 package com.mr.texasholdem.evaluator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import com.mr.texasholdem.card.Card;
 import com.mr.texasholdem.hand.Hand;
 
 public class Evaluator {
 
-  private final List<HandEvaluator> handEvaluators = new ArrayList<>();
+  private final SortedSet<HandEvaluator> handEvaluators = new TreeSet<>((o1, o2) -> o2.priority() - o1.priority());
 
   public Evaluator() {
     handEvaluators.add(new HighCardEvaluator());
@@ -24,9 +24,8 @@ public class Evaluator {
   }
 
   public Hand evaluate(Card[] cards) {
-    int size = handEvaluators.size();
-    for (int a = size - 1; a >= 0; a--) {
-      Hand hand = handEvaluators.get(a).evaluate(cards);
+    for (HandEvaluator handEvaluator : handEvaluators) {
+      Hand hand = handEvaluator.evaluate(cards);
       if (hand != null)
         return hand;
     }
