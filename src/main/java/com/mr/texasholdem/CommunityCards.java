@@ -13,7 +13,9 @@ public class CommunityCards {
       throw new WrongInputParameterException("Wrong community card code string length. It must be 10: " + cardCodes);
     }
     for (int a = 0; a < 10; a += 2) {
-      cards[a / 2] = Card.valueOf(cardCodes.substring(a, a + 2));
+      Card card = Card.valueOf(cardCodes.substring(a, a + 2));
+      Card.validateCard(cards, card);
+      cards[a / 2] = card;
     }
   }
 

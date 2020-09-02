@@ -1,7 +1,6 @@
 package com.mr.texasholdem.hand;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 import com.mr.texasholdem.card.Card;
 import com.mr.texasholdem.card.CardRankComparator;
@@ -32,9 +31,20 @@ public class Hand implements Comparable<Hand> {
 
   private final Rank rank;
 
+  private final HandPriority handPriority;
+
   public Hand(int value, Rank rank) {
     this.value = value;
     this.rank = rank;
+    handPriority = new HandPriority(value, rank);
+  }
+
+  protected static Card[] sortHandByRank(Card[] cards) {
+    if (cards == null || cards.length != 5) {
+      throw new IllegalArgumentException("Hand must have 5 cards: " + Arrays.toString(cards));
+    }
+    Arrays.sort(cards, new CardRankComparator());
+    return cards;
   }
 
   public int getValue() {
@@ -45,6 +55,10 @@ public class Hand implements Comparable<Hand> {
     return rank;
   }
 
+  public HandPriority getHandPriority() {
+    return handPriority;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o)
@@ -52,26 +66,17 @@ public class Hand implements Comparable<Hand> {
     if (o == null || getClass() != o.getClass())
       return false;
     Hand hand = (Hand) o;
-    return value == hand.value && rank == hand.rank;
+    return getHandPriority().equals(hand.getHandPriority());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(value, rank);
+    return getHandPriority().hashCode();
   }
 
   @Override
   public int compareTo(Hand o) {
-    int res = value - o.value;
-    return res == 0 ? rank.compareTo(o.rank) : res;
-  }
-
-  protected static Card[] sortHandByRank(Card[] cards) {
-    if (cards == null || cards.length != 5) {
-      throw new IllegalArgumentException("Hand must have 5 cards: " + Arrays.toString(cards));
-    }
-    Arrays.sort(cards, new CardRankComparator());
-    return cards;
+    return getHandPriority().compareTo(o.getHandPriority());
   }
 
 }

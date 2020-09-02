@@ -2,6 +2,7 @@ package com.mr.texasholdem.card;
 
 import com.mr.texasholdem.WrongInputParameterException;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -100,4 +101,13 @@ public class Card {
     return Stream.of(cards).filter(c -> c.getRank() == rank).findFirst().orElseGet(() -> null);
   }
 
+  public static boolean hasCard(Card[] cards, Card card) {
+    return Arrays.asList(cards).contains(card);
+  }
+
+  public static void validateCard(Card[] cards, Card card) throws WrongInputParameterException {
+    if (Card.hasCard(cards, card)){
+      throw new WrongInputParameterException("Card " + card + " entered at least 2 times");
+    }
+  }
 }

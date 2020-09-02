@@ -1,16 +1,17 @@
 package com.mr.texasholdem;
 
+import com.mr.texasholdem.hand.Hand;
+import com.mr.texasholdem.hand.HandPriority;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Main {
 
   public static void main(String[] args) {
-    System.out.println("Please enter community and then hole cards");
+    System.out.println("Please enter 5 community and then hole card pairs");
     while (true) {
       String[] tokens = getTokens();
       if (tokens.length == 0)
@@ -23,7 +24,7 @@ public class Main {
           sevenCards.add(sevenCard);
         }
         Collections.sort(sevenCards);
-        printResult(communityCards, sevenCards);
+        printResult(sevenCards);
       }
       catch (WrongInputParameterException e) {
         System.out.println("Wrong input parameters: " + e.getMessage());
@@ -33,26 +34,22 @@ public class Main {
 
   }
 
-  private static void printResult(CommunityCards communityCards, List<SevenCard> sevenCards) {
-    SevenCard prevSevenCard = sevenCards.get(0);
-    System.out.print(prevSevenCard.getHoleCardCodes());
-    for (int a = 1; a < sevenCards.size(); a++) {
-      SevenCard sevenCard = sevenCards.get(a);
-      if (prevSevenCard.equals(sevenCard)) {
-        System.out.print("=");
-      }
-      else {
-        System.out.print(" ");
-      }
-      System.out.print(sevenCard.getHoleCardCodes());
-      prevSevenCard = sevenCard;
+  private static void printResult(List<SevenCard> sevenCards) {
+    SortedMap<HandPriority, List<String>> holeCardsByPriority = new TreeMap<>();
+    for (SevenCard sevenCard : sevenCards){
+      holeCardsByPriority.putIfAbsent(sevenCard.getHand().getHandPriority(), new ArrayList<>());
+      holeCardsByPriority.get(sevenCard.getHand().getHandPriority()).add(sevenCard.getHoleCardCodes());
+    }
+
+    for (List<String> holeCards : holeCardsByPriority.values()){
+      System.out.print(holeCards.stream().sorted().reduce((s1,s2)->s1 + "=" + s2).orElse("") + " ");
     }
     System.out.println();
   }
 
   private static String[] getTokens() {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    String inputString = null;
+    String inputString;
     String[] tokens;
     while (true) {
       try {

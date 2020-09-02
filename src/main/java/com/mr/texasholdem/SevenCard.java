@@ -20,7 +20,9 @@ public class SevenCard implements Comparable<SevenCard> {
     }
     this.communityCards = communityCards;
     holeCards[0] = new Card(holeCardCodes.substring(0, 2));
+    Card.validateCard(communityCards.getCards(), holeCards[0]);
     holeCards[1] = new Card(holeCardCodes.substring(2, 4));
+    Card.validateCard(communityCards.getCards(), holeCards[1]);
     hand = new Evaluator().evaluate(getAllCards());
   }
 
