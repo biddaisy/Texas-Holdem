@@ -39,7 +39,7 @@ public class StraightEvaluator extends AbstractHandEvaluator {
   }
 
   private Card[] transfigurate(SortedSet<Card> sortedCards, Card ace) {
-    Card one = ace.clone().transfiguration();
+    Card one = ace.copy().transfiguration();
     sortedCards.remove(ace);
     sortedCards.add(one);
     return sortedCards.toArray(new Card[] {});

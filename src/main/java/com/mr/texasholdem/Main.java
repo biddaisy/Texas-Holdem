@@ -1,12 +1,11 @@
 package com.mr.texasholdem;
 
-import com.mr.texasholdem.hand.Hand;
-import com.mr.texasholdem.hand.HandPriority;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
+
+import com.mr.texasholdem.hand.HandPriority;
 
 public class Main {
 

@@ -62,7 +62,7 @@ public class Card {
     return this.getSuit() == card.getSuit();
   }
 
-  public Card clone() {
+  public Card copy() {
     return new Card(rank, suit);
   }
 
