@@ -64,7 +64,7 @@ public class Main {
       }
       tokens = inputString.split("\\s+");
       if (tokens.length < 2) {
-        System.out.println("wrong input data");
+        System.out.println("Please enter at least one hole card pair");
       }
       else {
         return tokens;
