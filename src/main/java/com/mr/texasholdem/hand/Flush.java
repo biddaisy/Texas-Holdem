@@ -21,7 +21,7 @@ public class Flush extends Hand {
   }
 
   public static boolean isValidFlush(Card[] five) {
-    for (int a = 1; a < 4; a++) {
+    for (int a = 1; a < 5; a++) {
       if (!five[0].equalsBySuit(five[a])) {
         return false;
       }
