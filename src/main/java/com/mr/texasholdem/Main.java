@@ -15,18 +15,13 @@ public class Main {
 
   public static void main(String[] args) {
     System.out.println("Please enter 5 community and then hole card pairs");
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-      while (true) {
-        String[] tokens = getTokens(reader);
-        if (tokens.length == 0)
-          return;
-        runGame(tokens);
-      }
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    while (true) {
+      String[] tokens = getTokens(reader);
+      if (tokens.length == 0)
+        return;
+      runGame(tokens);
     }
-    catch (IOException e) {
-      e.printStackTrace(System.out);
-    }
-
   }
 
   private static void runGame(String[] tokens) {
