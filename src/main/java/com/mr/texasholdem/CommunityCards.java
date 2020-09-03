@@ -1,9 +1,8 @@
 package com.mr.texasholdem;
 
-import com.mr.texasholdem.card.Card;
-
 import java.util.Arrays;
-import java.util.List;
+
+import com.mr.texasholdem.card.Card;
 
 public class CommunityCards {
 
@@ -18,10 +17,6 @@ public class CommunityCards {
       Card.validateCard(cards, card);
       cards[a / 2] = card;
     }
-  }
-
-  public List<Card> getCardsAsList() {
-    return Arrays.asList(cards);
   }
 
   public Card[] getCards() {

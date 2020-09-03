@@ -3,7 +3,10 @@ package com.mr.texasholdem;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import com.mr.texasholdem.card.Card;
 import com.mr.texasholdem.hand.HandPriority;
@@ -12,28 +15,35 @@ public class Main {
 
   public static void main(String[] args) {
     System.out.println("Please enter 5 community and then hole card pairs");
-    while (true) {
-      String[] tokens = getTokens();
-      if (tokens.length == 0)
-        return;
-      try {
-        CommunityCards communityCards = new CommunityCards(tokens[0]);
-        List<Card> holeCards = new ArrayList<>();
-        List<SevenCard> sevenCards = new ArrayList<>();
-        for (int a = 1; a < tokens.length; a++) {
-          SevenCard sevenCard = new SevenCard(communityCards, tokens[a]);
-          validateHoleCards(holeCards, sevenCard);
-          sevenCards.add(sevenCard);
-        }
-        Collections.sort(sevenCards);
-        printResult(sevenCards);
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+      while (true) {
+        String[] tokens = getTokens(reader);
+        if (tokens.length == 0)
+          return;
+        runGame(tokens);
       }
-      catch (WrongInputParameterException e) {
-        System.out.println("Wrong input parameters: " + e.getMessage());
-      }
-
+    }
+    catch (IOException e) {
+      e.printStackTrace(System.out);
     }
 
+  }
+
+  private static void runGame(String[] tokens) {
+    try {
+      CommunityCards communityCards = new CommunityCards(tokens[0]);
+      List<Card> holeCards = new ArrayList<>();
+      List<SevenCard> sevenCards = new ArrayList<>();
+      for (int a = 1; a < tokens.length; a++) {
+        SevenCard sevenCard = new SevenCard(communityCards, tokens[a]);
+        validateHoleCards(holeCards, sevenCard);
+        sevenCards.add(sevenCard);
+      }
+      printResult(sevenCards);
+    }
+    catch (WrongInputParameterException e) {
+      System.out.println("Wrong input parameters: " + e.getMessage());
+    }
   }
 
   private static void validateHoleCards(final List<Card> holeCards, SevenCard sevenCard) throws WrongInputParameterException {
@@ -58,8 +68,7 @@ public class Main {
     System.out.println();
   }
 
-  private static String[] getTokens() {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+  private static String[] getTokens(BufferedReader reader) {
     String inputString;
     String[] tokens;
     while (true) {
@@ -81,6 +90,5 @@ public class Main {
         return tokens;
       }
     }
-
   }
 }
