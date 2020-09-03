@@ -1,10 +1,11 @@
 package com.mr.texasholdem.card;
 
-import com.mr.texasholdem.WrongInputParameterException;
-
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
+
+import com.mr.texasholdem.WrongInputParameterException;
 
 public class Card {
   private Rank rank;
@@ -102,12 +103,32 @@ public class Card {
   }
 
   public static boolean hasCard(Card[] cards, Card card) {
-    return Arrays.asList(cards).contains(card);
+    return hasCard(Arrays.asList(cards), card);
+  }
+
+  public static boolean hasCard(List<Card> cards, Card card) {
+    return cards.contains(card);
   }
 
   public static void validateCard(Card[] cards, Card card) throws WrongInputParameterException {
-    if (Card.hasCard(cards, card)){
-      throw new WrongInputParameterException("Card " + card + " entered at least 2 times");
+    if (Card.hasCard(cards, card)) {
+      throwCardAlreadyExistsException(card);
     }
+  }
+
+  public static void validateCards(Card card1, Card card2) throws WrongInputParameterException {
+    if (card1.equals(card2)) {
+      throwCardAlreadyExistsException(card1);
+    }
+  }
+
+  public static void validateCard(List<Card> cards, Card card) throws WrongInputParameterException {
+    if (Card.hasCard(cards, card)) {
+      throwCardAlreadyExistsException(card);
+    }
+  }
+
+  private static void throwCardAlreadyExistsException(Card card) throws WrongInputParameterException {
+    throw new WrongInputParameterException("Card " + card + " entered at least 2 times");
   }
 }

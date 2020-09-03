@@ -23,6 +23,7 @@ public class SevenCard implements Comparable<SevenCard> {
     Card.validateCard(communityCards.getCards(), holeCards[0]);
     holeCards[1] = new Card(holeCardCodes.substring(2, 4));
     Card.validateCard(communityCards.getCards(), holeCards[1]);
+    Card.validateCards(holeCards[0], holeCards[1]);
     hand = new Evaluator().evaluate(getAllCards());
   }
 
@@ -32,6 +33,14 @@ public class SevenCard implements Comparable<SevenCard> {
 
   public String getHoleCardCodes() {
     return holeCards[0].toString() + holeCards[1].toString();
+  }
+
+  public Card getHoleCard1(){
+      return holeCards[0];
+  }
+
+  public Card getHoleCard2(){
+    return holeCards[1];
   }
 
   @Override

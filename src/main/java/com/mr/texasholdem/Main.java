@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+import com.mr.texasholdem.card.Card;
 import com.mr.texasholdem.hand.HandPriority;
 
 public class Main {
@@ -17,9 +18,11 @@ public class Main {
         return;
       try {
         CommunityCards communityCards = new CommunityCards(tokens[0]);
+        List<Card> holeCards = new ArrayList<>();
         List<SevenCard> sevenCards = new ArrayList<>();
         for (int a = 1; a < tokens.length; a++) {
           SevenCard sevenCard = new SevenCard(communityCards, tokens[a]);
+          validateHoleCards(holeCards, sevenCard);
           sevenCards.add(sevenCard);
         }
         Collections.sort(sevenCards);
@@ -33,15 +36,24 @@ public class Main {
 
   }
 
+  private static void validateHoleCards(final List<Card> holeCards, SevenCard sevenCard) throws WrongInputParameterException {
+    Card holeCard1 = sevenCard.getHoleCard1();
+    Card holeCard2 = sevenCard.getHoleCard2();
+    Card.validateCard(holeCards, holeCard1);
+    Card.validateCard(holeCards, holeCard2);
+    holeCards.add(holeCard1);
+    holeCards.add(holeCard2);
+  }
+
   private static void printResult(List<SevenCard> sevenCards) {
     SortedMap<HandPriority, List<String>> holeCardsByPriority = new TreeMap<>();
-    for (SevenCard sevenCard : sevenCards){
+    for (SevenCard sevenCard : sevenCards) {
       holeCardsByPriority.putIfAbsent(sevenCard.getHand().getHandPriority(), new ArrayList<>());
       holeCardsByPriority.get(sevenCard.getHand().getHandPriority()).add(sevenCard.getHoleCardCodes());
     }
 
-    for (List<String> holeCards : holeCardsByPriority.values()){
-      System.out.print(holeCards.stream().sorted().reduce((s1,s2)->s1 + "=" + s2).orElse("") + " ");
+    for (List<String> holeCards : holeCardsByPriority.values()) {
+      System.out.print(holeCards.stream().sorted().reduce((s1, s2) -> s1 + "=" + s2).orElse("") + " ");
     }
     System.out.println();
   }
@@ -63,7 +75,7 @@ public class Main {
       }
       tokens = inputString.split("\\s+");
       if (tokens.length < 2) {
-        System.out.println("Please enter at least one hole card pair");
+        System.out.println("Please enter community cards and at least one hole card pair");
       }
       else {
         return tokens;
