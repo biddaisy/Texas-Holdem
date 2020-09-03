@@ -1,14 +1,14 @@
 package com.mr.texasholdem.evaluator;
 
-import com.mr.texasholdem.card.Card;
-import com.mr.texasholdem.hand.Hand;
-import com.mr.texasholdem.hand.FourOfAKind;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class FourOfAKindEvaluator extends AbstractHandEvaluator{
+import com.mr.texasholdem.card.Card;
+import com.mr.texasholdem.hand.FourOfAKind;
+import com.mr.texasholdem.hand.Hand;
+
+public class FourOfAKindEvaluator extends AbstractHandEvaluator {
 
   @Override
   public Hand evaluate(Card[] cards) {
@@ -36,16 +36,17 @@ public class FourOfAKindEvaluator extends AbstractHandEvaluator{
         if (card2 == null) {
           card2 = card;
         }
-        else if (card3 == null){
-          card3 = card;
-        }
-        else {
-          cards.remove(card2);
-          cards.remove(card3);
-          cards.remove(card);
-          fourOfAKinds.add(new FourOfAKind(card1, card2, card3, card));
-          break;
-        }
+        else
+          if (card3 == null) {
+            card3 = card;
+          }
+          else {
+            cards.remove(card2);
+            cards.remove(card3);
+            cards.remove(card);
+            fourOfAKinds.add(new FourOfAKind(card1, card2, card3, card));
+            break;
+          }
       }
     }
     cards.remove(card1);

@@ -10,14 +10,10 @@ public class Flush extends Hand {
 
   public Flush(Card[] cards) {
     super(FLUSH_VALUE, sortHandByRank(cards)[4].getRank());
-    if (!isValidFlush(cards)){
+    if (!isValidFlush(cards)) {
       throw new IllegalArgumentException("wrong flush : " + Arrays.toString(cards));
     }
     this.cards = Arrays.copyOf(cards, 5);
-  }
-
-  public Card[] getCards() {
-    return Arrays.copyOf(cards, 5);
   }
 
   public static boolean isValidFlush(Card[] five) {
@@ -27,5 +23,9 @@ public class Flush extends Hand {
       }
     }
     return true;
+  }
+
+  public Card[] getCards() {
+    return Arrays.copyOf(cards, 5);
   }
 }

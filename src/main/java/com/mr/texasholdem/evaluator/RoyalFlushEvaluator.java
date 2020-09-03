@@ -5,7 +5,7 @@ import com.mr.texasholdem.hand.Hand;
 import com.mr.texasholdem.hand.RoyalFlush;
 import com.mr.texasholdem.hand.StraightFlush;
 
-public class RoyalFlushEvaluator  extends AbstractHandEvaluator {
+public class RoyalFlushEvaluator extends AbstractHandEvaluator {
 
   @Override
   public Hand evaluate(Card[] cards) {

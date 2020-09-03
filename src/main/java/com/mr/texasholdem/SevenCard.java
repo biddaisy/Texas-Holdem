@@ -35,11 +35,11 @@ public class SevenCard implements Comparable<SevenCard> {
     return holeCards[0].toString() + holeCards[1].toString();
   }
 
-  public Card getHoleCard1(){
-      return holeCards[0];
+  public Card getHoleCard1() {
+    return holeCards[0];
   }
 
-  public Card getHoleCard2(){
+  public Card getHoleCard2() {
     return holeCards[1];
   }
 

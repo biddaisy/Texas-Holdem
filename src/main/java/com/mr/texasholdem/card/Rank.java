@@ -60,6 +60,6 @@ public enum Rank {
 
   @Override
   public String toString() {
-    return this == ONE? ACE.toString() : String.valueOf(code);
+    return this == ONE ? ACE.toString() : String.valueOf(code);
   }
 }

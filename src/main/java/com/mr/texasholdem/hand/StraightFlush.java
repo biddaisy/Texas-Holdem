@@ -17,7 +17,7 @@ public class StraightFlush extends Straight {
     }
   }
 
-  public boolean isRoyal(){
+  public boolean isRoyal() {
     return RoyalFlush.isValidRoyalFlush(getCards());
   }
 }

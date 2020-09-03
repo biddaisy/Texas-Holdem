@@ -14,16 +14,16 @@ public class TwoPairs extends Hand {
     this.pair2 = pair2;
   }
 
+  private static Rank getRank(Pair pair1, Pair pair2) {
+    return pair1.getRank().compareTo(pair2.getRank()) > 0 ? pair1.getRank() : pair2.getRank();
+  }
+
   public Pair getPair1() {
     return pair1;
   }
 
   public Pair getPair2() {
     return pair2;
-  }
-
-  private static Rank getRank(Pair pair1, Pair pair2) {
-    return pair1.getRank().compareTo(pair2.getRank()) > 0 ? pair1.getRank() : pair2.getRank();
   }
 
 }

@@ -10,7 +10,7 @@ public class Straight extends Hand {
 
   public Straight(Card[] cards) {
     super(STRAIGHT_VALUE, sortHandByRank(cards)[4].getRank());
-    if (!isValidStraight(cards)){
+    if (!isValidStraight(cards)) {
       throw new IllegalArgumentException("wrong straight : " + Arrays.toString(cards));
     }
     this.cards = Arrays.copyOf(cards, 5);
@@ -18,18 +18,10 @@ public class Straight extends Hand {
 
   protected Straight(int handValue, Card[] cards) {
     super(handValue, sortHandByRank(cards)[4].getRank());
-    if (!isValidStraight(cards)){
+    if (!isValidStraight(cards)) {
       throw new IllegalArgumentException("wrong straight : " + Arrays.toString(cards));
     }
     this.cards = Arrays.copyOf(cards, 5);
-  }
-
-  public Card[] getCards() {
-    return Arrays.copyOf(cards, 5);
-  }
-
-  public boolean isFlush(){
-    return Flush.isValidFlush(cards);
   }
 
   public static boolean isValidStraight(Card[] five) {
@@ -39,5 +31,13 @@ public class Straight extends Hand {
       }
     }
     return true;
+  }
+
+  public Card[] getCards() {
+    return Arrays.copyOf(cards, 5);
+  }
+
+  public boolean isFlush() {
+    return Flush.isValidFlush(cards);
   }
 }

@@ -27,14 +27,11 @@ public class Hand implements Comparable<Hand> {
 
   public static final int ROYAL_FLUSH_VALUE = 10;
 
-  private final int value;
-
   private final Rank rank;
 
   private final HandPriority handPriority;
 
   public Hand(int value, Rank rank) {
-    this.value = value;
     this.rank = rank;
     handPriority = new HandPriority(value, rank);
   }
@@ -45,10 +42,6 @@ public class Hand implements Comparable<Hand> {
     }
     Arrays.sort(cards, new CardRankComparator());
     return cards;
-  }
-
-  public int getValue() {
-    return value;
   }
 
   public Rank getRank() {

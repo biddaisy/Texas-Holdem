@@ -9,6 +9,10 @@ import com.mr.texasholdem.card.Card;
 
 public abstract class AbstractHandEvaluator implements HandEvaluator {
 
+  protected static List<Card> asList(Card[] cards) {
+    return Arrays.stream(cards).collect(Collectors.toList());
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o)
@@ -32,10 +36,6 @@ public abstract class AbstractHandEvaluator implements HandEvaluator {
   @Override
   public int compareTo(HandEvaluator o) {
     return priority() - o.priority();
-  }
-
-  protected static List<Card> asList(Card[] cards) {
-    return Arrays.stream(cards).collect(Collectors.toList());
   }
 
 }
