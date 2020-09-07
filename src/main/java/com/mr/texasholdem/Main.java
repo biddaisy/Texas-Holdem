@@ -56,8 +56,14 @@ public class Main {
       holeCardsByPriority.get(sevenCard.getHand().getHandPriority()).add(sevenCard.getHoleCardCodes());
     }
 
+    boolean firstTime = true;
     for (List<String> holeCards : holeCardsByPriority.values()) {
-      System.out.print(holeCards.stream().sorted().reduce((s1, s2) -> s1 + "=" + s2).orElse("") + " ");
+      if (!firstTime) {
+        System.out.print(' ');
+      } else {
+        firstTime = false;
+      }
+      System.out.print(holeCards.stream().sorted().reduce((s1, s2) -> s1 + "=" + s2).orElse(""));
     }
     System.out.println();
   }
