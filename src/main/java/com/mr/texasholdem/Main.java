@@ -14,7 +14,6 @@ import com.mr.texasholdem.hand.HandPriority;
 public class Main {
 
   public static void main(String[] args) {
-    System.out.println("Please enter 5 community and then hole card pairs");
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     while (true) {
       String[] tokens = getTokens(reader);
