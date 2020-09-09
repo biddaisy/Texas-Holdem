@@ -12,7 +12,9 @@ public class HighCardEvaluator extends AbstractHandEvaluator {
 
   @Override
   public Hand evaluate(Card[] cards) {
-    return new HighCard(Collections.max(Arrays.asList(cards), new CardRankComparator()));
+    Card highCard = Collections.max(Arrays.asList(cards), new CardRankComparator());
+    Card[] kickers = findKickers(cards, highCard);
+    return new HighCard(highCard, kickers);
   }
 
   @Override

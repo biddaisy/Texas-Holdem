@@ -9,7 +9,7 @@ public class Flush extends Hand {
   private final Card[] cards;
 
   public Flush(Card[] cards) {
-    super(FLUSH_VALUE, sortHandByRank(cards)[4].getRank());
+    super(FLUSH_VALUE, sortHandByRank(cards)[4].getRank(), new Card[0]);
     if (!isValidFlush(cards)) {
       throw new IllegalArgumentException("wrong flush : " + Arrays.toString(cards));
     }

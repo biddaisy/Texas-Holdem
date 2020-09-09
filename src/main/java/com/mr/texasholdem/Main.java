@@ -3,10 +3,7 @@ package com.mr.texasholdem;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 import com.mr.texasholdem.card.Card;
 import com.mr.texasholdem.hand.HandPriority;
@@ -33,6 +30,7 @@ public class Main {
         validateHoleCards(holeCards, sevenCard);
         sevenCards.add(sevenCard);
       }
+      /*Collections.sort(sevenCards);*/
       printResult(sevenCards);
     }
     catch (WrongInputParameterException e) {

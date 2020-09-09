@@ -9,15 +9,11 @@ public class Straight extends Hand {
   private final Card[] cards;
 
   public Straight(Card[] cards) {
-    super(STRAIGHT_VALUE, sortHandByRank(cards)[4].getRank());
-    if (!isValidStraight(cards)) {
-      throw new IllegalArgumentException("wrong straight : " + Arrays.toString(cards));
-    }
-    this.cards = Arrays.copyOf(cards, 5);
+    this(STRAIGHT_VALUE, cards);
   }
 
   protected Straight(int handValue, Card[] cards) {
-    super(handValue, sortHandByRank(cards)[4].getRank());
+    super(handValue, sortHandByRank(cards)[4].getRank(), new Card[0]);
     if (!isValidStraight(cards)) {
       throw new IllegalArgumentException("wrong straight : " + Arrays.toString(cards));
     }

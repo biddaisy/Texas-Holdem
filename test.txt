@@ -1,0 +1,22 @@
+4cKs4h8s7s Ad4s Ac4d As9s KhKd 5d6d
+2c3s4h5s7s Ad4s Ac4d As9s KhKd 5d6d
+
+Straight
+QcJsKh5s7s AdTs Ac4d As9s KhKd 5d6d
+
+Flush
+QdJdKd5s7s AdTd Ac4d As9s KhKd 5d6d
+QdJdKd5s7d AdTh Ac4d As9s KhKd 5d6d
+
+Full House
+QdJdTdAsAh AdTh Ac4d As9s KhKd 5d6d
+
+Four of a kind
+TcTsTdAsAh AdTh Ac4d As9s KhKd 5d6d
+AsAhTcTsTd AdTh Ac4d As9s KhKd 5d6d
+
+Straight Flush
+QdJdKd5s7s Td9d Ac4d As9s KhKd 5d6d
+
+Royal Flush
+QdJdKd5s7s AdTd Ac4d As9s KhKd 5d6d

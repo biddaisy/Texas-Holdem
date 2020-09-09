@@ -1,12 +1,13 @@
 package com.mr.texasholdem.hand;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import com.mr.texasholdem.card.Card;
 import com.mr.texasholdem.card.CardRankComparator;
 import com.mr.texasholdem.card.Rank;
 
-public class Hand implements Comparable<Hand> {
+public abstract class Hand implements Comparable<Hand> {
   public static final int HIGH_CARD_VALUE = 1;
 
   public static final int PAIR_VALUE = 2;
@@ -27,13 +28,27 @@ public class Hand implements Comparable<Hand> {
 
   public static final int ROYAL_FLUSH_VALUE = 10;
 
-  private final Rank rank;
-
   private final HandPriority handPriority;
 
-  public Hand(int value, Rank rank) {
-    this.rank = rank;
-    handPriority = new HandPriority(value, rank);
+  private final Card[] kickers;
+
+  protected Hand(int value, Rank rank, Card[] kickers) {
+    this(value, rank, rank, kickers);
+  }
+
+  protected Hand(int value, Rank rank, Rank rank2, Card[] kickers) {
+    this.kickers = kickers;
+    verifyKickers();
+    this.handPriority = new HandPriority(value, rank, rank2, findMaxKickerRank() );
+  }
+
+  private Rank findMaxKickerRank() {
+    if (kickers.length == 0) {
+      return null;
+    }
+    else {
+      return Collections.max(Arrays.asList(kickers), new CardRankComparator()).getRank();
+    }
   }
 
   protected static Card[] sortHandByRank(Card[] cards) {
@@ -45,7 +60,7 @@ public class Hand implements Comparable<Hand> {
   }
 
   public Rank getRank() {
-    return rank;
+    return handPriority.getRank();
   }
 
   public HandPriority getHandPriority() {
@@ -72,4 +87,24 @@ public class Hand implements Comparable<Hand> {
     return getHandPriority().compareTo(o.getHandPriority());
   }
 
+  protected void verifyKickers(){
+    int kickersMax;
+    if (this instanceof HighCard){
+      kickersMax = 4;
+    } else if (this instanceof Pair && !(this instanceof ThreeOfAKind)){
+      kickersMax = 3;
+    } else if (this instanceof TwoPairs){
+      kickersMax = 1;
+    } else if (this instanceof ThreeOfAKind && !(this instanceof FourOfAKind)){
+      kickersMax = 2;
+    } else if (this instanceof FourOfAKind){
+      kickersMax = 1;
+    }
+    else {
+      return;
+    }
+    if (kickers.length > kickersMax){
+      throw new IllegalArgumentException("kicker cards cannot be more than " + kickersMax + ": " + Arrays.toString(kickers));
+    }
+  }
 }

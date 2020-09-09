@@ -2,12 +2,13 @@ package com.mr.texasholdem.hand;
 
 import com.mr.texasholdem.card.Card;
 
+import java.util.Arrays;
+
 public class HighCard extends Hand {
 
-  private Card card;
-
-  public HighCard(Card card) {
-    super(HIGH_CARD_VALUE, card.getRank());
+  private final Card card;
+  public HighCard(Card card, Card[] kickers) {
+    super(HIGH_CARD_VALUE, card.getRank(), kickers);
     this.card = card;
   }
 
@@ -15,7 +16,4 @@ public class HighCard extends Hand {
     return card;
   }
 
-  public void setCard(Card card) {
-    this.card = card;
-  }
 }

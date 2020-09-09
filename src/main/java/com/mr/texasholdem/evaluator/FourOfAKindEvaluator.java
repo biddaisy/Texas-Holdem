@@ -21,11 +21,11 @@ public class FourOfAKindEvaluator extends AbstractHandEvaluator {
   }
 
   protected FourOfAKind findFourOfAKind(List<Card> cards) {
-    List<FourOfAKind> fourOfAKinds = evaluateFourOfAKinds(cards, new ArrayList<>());
+    List<FourOfAKind> fourOfAKinds = findFourOfAKinds(cards.toArray(new Card[0]), cards, new ArrayList<>());
     return !fourOfAKinds.isEmpty() ? Collections.max(fourOfAKinds) : null;
   }
 
-  private List<FourOfAKind> evaluateFourOfAKinds(List<Card> cards, List<FourOfAKind> fourOfAKinds) {
+  private List<FourOfAKind> findFourOfAKinds(Card[] sevenCards, List<Card> cards, List<FourOfAKind> fourOfAKinds) {
     int size = cards.size();
     Card card1 = cards.get(0);
     Card card2 = null;
@@ -44,14 +44,15 @@ public class FourOfAKindEvaluator extends AbstractHandEvaluator {
             cards.remove(card2);
             cards.remove(card3);
             cards.remove(card);
-            fourOfAKinds.add(new FourOfAKind(card1, card2, card3, card));
+            Card[] kickers = findKickers(sevenCards, card1, card2, card3, card);
+            fourOfAKinds.add(new FourOfAKind(card1, card2, card3, card, kickers));
             break;
           }
       }
     }
     cards.remove(card1);
     if (cards.size() > 3) {
-      return evaluateFourOfAKinds(cards, fourOfAKinds);
+      return findFourOfAKinds(sevenCards, cards, fourOfAKinds);
     }
     return fourOfAKinds;
   }

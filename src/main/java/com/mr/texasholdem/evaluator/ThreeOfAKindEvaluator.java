@@ -21,11 +21,11 @@ public class ThreeOfAKindEvaluator extends AbstractHandEvaluator {
   }
 
   protected ThreeOfAKind findThreeOfAKind(List<Card> cards) {
-    List<ThreeOfAKind> threeOfAKinds = evaluateThreeOfAKinds(cards, new ArrayList<>());
+    List<ThreeOfAKind> threeOfAKinds = findThreeOfAKinds(cards.toArray(new Card[0]), cards, new ArrayList<>());
     return !threeOfAKinds.isEmpty() ? Collections.max(threeOfAKinds) : null;
   }
 
-  private List<ThreeOfAKind> evaluateThreeOfAKinds(List<Card> cards, List<ThreeOfAKind> threeOfAKinds) {
+  private List<ThreeOfAKind> findThreeOfAKinds(Card[] sevenCards, List<Card> cards, List<ThreeOfAKind> threeOfAKinds) {
     int size = cards.size();
     Card card1 = cards.get(0);
     Card card2 = null;
@@ -38,14 +38,15 @@ public class ThreeOfAKindEvaluator extends AbstractHandEvaluator {
         else {
           cards.remove(card2);
           cards.remove(card);
-          threeOfAKinds.add(new ThreeOfAKind(card1, card2, card));
+          Card[] kickers = findKickers(sevenCards, card1, card2, card);
+          threeOfAKinds.add(new ThreeOfAKind(card1, card2, card, kickers));
           break;
         }
       }
     }
     cards.remove(card1);
     if (cards.size() > 2) {
-      return evaluateThreeOfAKinds(cards, threeOfAKinds);
+      return findThreeOfAKinds(sevenCards, cards, threeOfAKinds);
     }
     return threeOfAKinds;
   }

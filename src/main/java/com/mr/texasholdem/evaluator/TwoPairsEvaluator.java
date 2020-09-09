@@ -14,13 +14,16 @@ public class TwoPairsEvaluator extends AbstractHandEvaluator {
   @Override
   public Hand evaluate(Card[] cards) {
     PairEvaluator pairEvaluator = new PairEvaluator();
-    List<Pair> pairs = pairEvaluator.evaluatePairs(asList(cards), new ArrayList<>());
+    List<Pair> pairs = pairEvaluator.findPairs(cards, asList(cards), new ArrayList<>());
     int size = pairs.size();
     if (size < 2) {
       return null;
     }
     Collections.sort(pairs);
-    return new TwoPairs(pairs.get(size - 1), pairs.get(size - 2));
+    Pair pair1 = pairs.get(size - 1);
+    Pair pair2 = pairs.get(size - 2);
+    Card[] kickers = findKickers(cards, pair1.getCard1(), pair1.getCard2(), pair2.getCard1(), pair2.getCard2());
+    return new TwoPairs(pair1, pair2, kickers);
   }
 
   @Override
