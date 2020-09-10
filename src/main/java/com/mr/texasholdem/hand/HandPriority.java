@@ -1,5 +1,6 @@
 package com.mr.texasholdem.hand;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import com.mr.texasholdem.card.Rank;
@@ -12,29 +13,30 @@ public class HandPriority implements Comparable<HandPriority> {
 
   private final Rank rank2;
 
-  private final Rank kickerRank;
+  private final Rank[] kickerRanks;
 
-  protected HandPriority(int value, Rank rank, Rank rank2, Rank kickerRank) {
+  protected HandPriority(int value, Rank rank, Rank rank2, Rank[] kickerRanks) {
     this.value = value;
     this.rank = rank;
     this.rank2 = rank2;
-    this.kickerRank = kickerRank;
+    this.kickerRanks = kickerRanks;
+    Arrays.sort(kickerRanks);
   }
 
-  public int getValue() {
+  protected int getValue() {
     return value;
   }
 
-  public Rank getRank() {
+  protected Rank getRank() {
     return rank;
   }
 
-  public Rank getRank2() {
+  protected Rank getRank2() {
     return rank2;
   }
 
-  public Rank getKickerRank() {
-    return kickerRank;
+  protected Rank[] getKickerRanks() {
+    return kickerRanks;
   }
 
   @Override
@@ -44,25 +46,27 @@ public class HandPriority implements Comparable<HandPriority> {
     if (o == null || getClass() != o.getClass())
       return false;
     HandPriority that = (HandPriority) o;
-    return value == that.value && rank == that.rank && rank2 == that.rank2 && kickerRank == that.kickerRank;
+    return value == that.value && rank == that.rank && rank2 == that.rank2 && Arrays.equals(kickerRanks, that.kickerRanks);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(value, rank, rank2, kickerRank);
+    int result = Objects.hash(value, rank, rank2);
+    result = 31 * result + Arrays.hashCode(kickerRanks);
+    return result;
   }
 
   @Override
   public int compareTo(HandPriority o) {
     int res = value - o.value;
-    if (res == 0 ) {
+    if (res == 0) {
       res = rank.compareTo(o.rank);
     }
-    if (res == 0 ) {
+    if (res == 0) {
       res = rank2.compareTo(o.rank2);
     }
-    if (res == 0 && kickerRank != null && o.kickerRank != null){
-      res = kickerRank.compareTo(o.kickerRank);
+    for (int a = kickerRanks.length - 1; res == 0 && a >= 0; a--) {
+      res = kickerRanks[a].compareTo(o.kickerRanks[a]);
     }
     return res;
   }

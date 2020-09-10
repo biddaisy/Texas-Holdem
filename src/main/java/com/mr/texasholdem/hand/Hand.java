@@ -2,6 +2,7 @@ package com.mr.texasholdem.hand;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 import com.mr.texasholdem.card.Card;
 import com.mr.texasholdem.card.CardRankComparator;
@@ -39,16 +40,11 @@ public abstract class Hand implements Comparable<Hand> {
   protected Hand(int value, Rank rank, Rank rank2, Card[] kickers) {
     this.kickers = kickers;
     verifyKickers();
-    this.handPriority = new HandPriority(value, rank, rank2, findMaxKickerRank() );
+    this.handPriority = new HandPriority(value, rank, rank2, mapKickersToSortedRanks() );
   }
 
-  private Rank findMaxKickerRank() {
-    if (kickers.length == 0) {
-      return null;
-    }
-    else {
-      return Collections.max(Arrays.asList(kickers), new CardRankComparator()).getRank();
-    }
+  private Rank[] mapKickersToSortedRanks() {
+    return Arrays.stream(kickers).sorted(new CardRankComparator()).map(Card::getRank).toArray(Rank[]::new);
   }
 
   protected static Card[] sortHandByRank(Card[] cards) {

@@ -2,8 +2,6 @@ package com.mr.texasholdem.hand;
 
 import com.mr.texasholdem.card.Card;
 
-import java.util.Arrays;
-
 public class HighCard extends Hand {
 
   private final Card card;
